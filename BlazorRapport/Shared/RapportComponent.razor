@@ -1,0 +1,31 @@
+﻿@inherits RapportComponentBase
+
+<h2>Student: @Student</h2>
+<table class="table table-primary">
+    <thead class="thead-dark">
+        <tr class="header">
+            <th class="text-right">Vak</th>
+            @for (int i = 0; i < Rapporten[0].Count(); i++)
+            {
+                <th>Rapport @(i+1)</th>
+            }
+            <th>Gemiddelde</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var vak in Rapporten)
+        {
+            double gem = vak.Select(v => v.Score).Average();
+            string gemClass = gem < 5 ? "danger" : "success";
+            <tr>
+                <td class="text-right">@vak[0].Vak</td>
+                @foreach (var rapport in vak)
+                {
+                    string scoreClass = rapport.Score < 5 ? "danger" : "success";
+                    <td class="text-center alert-@scoreClass">@rapport.Score/10</td>
+                }
+                <td class="text-center alert-@gemClass"><h5><strong>@gem/10</strong></h5></td>
+            </tr>
+        }
+    </tbody>
+</table>

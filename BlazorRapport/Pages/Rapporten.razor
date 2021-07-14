@@ -1,0 +1,31 @@
+﻿@page "/rapporten"
+@inherits RapportBase
+<h3>Rapporten</h3>
+<div>
+    <h5>
+        Selecteer een student:     
+        <select @bind="StudentSelected">
+            @if (Studenten != null)
+            {
+                foreach (var student in Studenten)
+                {
+                    <option value="@student">@student</option>
+                }
+            }
+        </select>
+    </h5>
+
+</div>
+
+
+@if (StudentSelected != null)
+{
+    @foreach (var student in Rapporten)
+    {
+        if (student[0][0].Student == StudentSelected)
+        {
+            <RapportComponent Student="@student[0][0].Student" Rapporten="student.ToList()"></RapportComponent>
+            break;
+        }
+    }
+}
